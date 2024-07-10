@@ -1,12 +1,18 @@
-package org.example.login.tools;
+package org.example.login.handler;
 
+import cn.hutool.json.JSONUtil;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.example.login.tools.CaptchaException;
+import org.example.login.tools.Result;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.ServletOutputStream;
+
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 

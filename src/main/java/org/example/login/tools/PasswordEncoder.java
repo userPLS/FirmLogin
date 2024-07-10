@@ -1,23 +1,28 @@
 package org.example.login.tools;
 
-import org.springframework.util.DigestUtils;
+import lombok.NoArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class PasswordEncoder {
+@NoArgsConstructor
+public class PasswordEncoder extends BCryptPasswordEncoder {
 
-        /**
-         * 密码加密
-         * @param rawPassword 登录时传入的密码
-         */
-        public static String encode(CharSequence rawPassword) {
-            return DigestUtils.md5DigestAsHex(rawPassword.toString().getBytes());
+    @Override
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        // 接收到的前端的密码
+        String pwd = rawPassword.toString();
+        // 进行rsa解密
+        try {
+            pwd = RsaUtils.decryptByPrivateKey(RsaProperties.privateKey, pwd);
+        } catch (Exception e) {
+            throw new BadCredentialsException(e.getMessage());
         }
-
-        /**
-         * 密码对比
-         * @param rawPassword 登录时传入的密码
-         * @param encodedPassword 数据库保存的加密过的密码
-         */
-        public static boolean matches(CharSequence rawPassword, String encodedPassword) {
-            return encodedPassword.equals(DigestUtils.md5DigestAsHex(rawPassword.toString().getBytes()));
+        if (encodedPassword != null && encodedPassword.length() != 0) {
+            return BCrypt.checkpw(pwd, encodedPassword);
+        } else {
+            return false;
         }
+    }
 }
+

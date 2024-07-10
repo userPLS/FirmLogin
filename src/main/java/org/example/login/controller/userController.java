@@ -3,12 +3,8 @@ package org.example.login.controller;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
-import org.example.login.pojo.Person;
 import org.example.login.service.userService;
-import org.example.login.tools.PasswordEncoder;
-import org.example.login.tools.TokenProvider;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
